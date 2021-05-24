@@ -94,13 +94,13 @@ func (s *Service) Save(ctx context.Context, item *Banner) (*Banner, error) {
 }
 
 // RemoveByID ...
-func (s *Service) RemoveByID(ctx context.Context, id int64) ([]*Banner, error) {
+func (s *Service) RemoveByID(ctx context.Context, id int64) (*Banner, error) {
 	s.mu.RLock()
 	defer s.mu.RUnlock()
 	for i, banner := range s.items {
 		if banner.ID == id {
 			s.items = append(s.items[:i], s.items[i+1:]...)
-			return s.items, nil
+			return banner, nil
 		}
 	}
 
